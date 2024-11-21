@@ -316,7 +316,7 @@ async def auto_rename_files(client, message):
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=(""💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
+                    progress_args=("💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
                 )
             elif type == "audio":
                 await client.send_audio(
@@ -326,7 +326,7 @@ async def auto_rename_files(client, message):
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=(""💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
+                    progress_args=("💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
                 )
         except Exception as e:
             os.remove(file_path)
