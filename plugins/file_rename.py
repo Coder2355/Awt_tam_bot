@@ -254,7 +254,7 @@ async def auto_rename_files(client, message):
         
         download_msg = await client.send_message(chat_id=TARGET_CHANNEL_ID, text=data + "💠Preparing to Download the Episode 📥")
         try:
-            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=(data, "🚀 Start Downloading From My Website ⚡, download_msg, time.time()))
+            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=(data, "🚀 Start Downloading From My Website ⚡", download_msg, time.time()))
         except Exception as e:
             # Mark the file as ignored
             del renaming_operations[file_id]
