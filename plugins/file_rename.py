@@ -7,6 +7,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert
 from helper.database import madflixbotz
+from helper.ffmpeg import fix_thumb, take_screen_shot, add_metadata
 from config import Config
 import os
 import time
@@ -199,6 +200,9 @@ async def auto_rename_files(client, message):
                 
                 format_template = format_template.replace(quality_placeholder, "".join(extracted_qualities))           
             
+        if not os.path.isdir("Metadata"):
+            os.mkdir("Metadata")
+
         _, file_extension = os.path.splitext(file_name)
         new_file_name = f"{format_template}{file_extension}"
         file_path = f"downloads/{new_file_name}"
@@ -212,6 +216,15 @@ async def auto_rename_files(client, message):
             del renaming_operations[file_id]
             return await download_msg.edit(e)     
 
+        _bool_metadata = await madflixbotz.get_metadata(message.chat.id) 
+    
+        if _bool_metadata:
+            metadata = await madflixbotz.get_metadata_code(message.chat.id)
+            metadata_path = f"Metadata/{new_file_name}"
+            await add_metadata(path, metadata_path, metadata, download_msg)
+        else:
+            await ms.edit("⏳ Mode Changing...  ⚡")
+        
         duration = 0
         try:
             metadata = extractMetadata(createParser(file_path))
@@ -245,7 +258,7 @@ async def auto_rename_files(client, message):
             if type == "document":
                 await client.send_document(
                     message.chat.id,
-                    document=file_path,
+                    document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
@@ -254,7 +267,7 @@ async def auto_rename_files(client, message):
             elif type == "video":
                 await client.send_video(
                     message.chat.id,
-                    video=file_path,
+                    video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
@@ -264,7 +277,7 @@ async def auto_rename_files(client, message):
             elif type == "audio":
                 await client.send_audio(
                     message.chat.id,
-                    audio=file_path,
+                    audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
