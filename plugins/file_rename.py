@@ -254,7 +254,7 @@ async def auto_rename_files(client, message):
         
         download_msg = await client.send_message(chat_id=TARGET_CHANNEL_ID, text=data + "💠Preparing to Download the Episode 📥")
         try:
-            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=(data, "🚀 Start Downloading From My Website ⚡", download_msg, time.time()))
+            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("🚀 Start Downloading Episode From My Website ⚡", download_msg, time.time()))
         except Exception as e:
             # Mark the file as ignored
             del renaming_operations[file_id]
@@ -301,32 +301,32 @@ async def auto_rename_files(client, message):
             type = media_type  # Use 'media_type' variable instead
             if type == "document":
                 await client.send_document(
-                    message.chat.id,
+                    chat_id=TARGET_CHANNEL_ID,
                     document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("💠 Uploading-", data, "-to👉", channel_name, upload_msg, time.time())
+                    progress_args=("💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
                 )
             elif type == "video":
                 await client.send_video(
-                    message.chat.id,
+                    chat_id=TARGET_CHANNEL_ID,
                     video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time())
+                    progress_args=(""💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
                 )
             elif type == "audio":
                 await client.send_audio(
-                    message.chat.id,
+                    chat_id=TARGET_CHANNEL_ID,
                     audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time())
+                    progress_args=(""💠 Uploading The Episode to {channel_name}", upload_msg, time.time())
                 )
         except Exception as e:
             os.remove(file_path)
