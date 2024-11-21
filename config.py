@@ -7,7 +7,7 @@ class Config(object):
     # pyro client config
     API_ID    = os.environ.get("API_ID", "21740783")
     API_HASH  = os.environ.get("API_HASH", "a5dc7fec8302615f5b441ec5e238cd46")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7766709030:AAF2V5suQoAbKfQObKrELeKqrHpjareNl64") 
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7770477241:AAFtQqKxAymyrv3a5Ilhb0mPnF9Wu4AhqhE") 
    
     # database config
     DB_NAME = os.environ.get("DB_NAME","boyrokey00")     
@@ -15,12 +15,12 @@ class Config(object):
  
     # other configs
     BOT_UPTIME  = time.time()
-    START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/4b306f4b15c23a8f22e58.jpg")
+    START_PIC   = os.environ.get("START_PIC", "https://telegra.ph/file/feb6dd0a1cb8576943c0f.jpg")
     ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6299192020').split()]
 
     # channels logs
-    FORCE_SUB   = os.environ.get("FORCE_SUB", None) 
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "0"))
+    FORCE_SUB   = os.environ.get("FORCE_SUB", "Anime_Warrior_Tamil") 
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002149238052"))
 
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
@@ -31,27 +31,24 @@ class Txt(object):
     # part of text configuration
     START_TXT = """Hello {} 👋 
 
-➻ This Is An Advanced And Yet Powerful Rename Bot.
+➻ This Is An Advanced Video Uploader Bot.
 
-➻ Using This Bot You Can Rename And Change Thumbnail Of Your Files.
+➻ Using This Bot You Can Able to Upload Your Files.
 
-➻ You Can Also Convert Video To File And File To Video.
+➻ You Can Also Select the path where the file is need to upload.
 
-➻ This Bot Also Supports Custom Thumbnail And Custom Caption.
+➻ This Bot is only for dev👉 @Anime_warrior_Tamil[Awt_botz].
 
-<b>Bot Is Made By :</b> @Madflix_Bots"""
+<b>Bot Is Made By :</b> @Anime_warrior_tamil"""
 
-    ABOUT_TXT = """
-╭───────────────⍟
-├<b>🤖 My Name</b> : {}
-├<b>🖥️ Developer</b> : <a href=https://t.me/Madflix_Bots>Madflix Botz</a> 
-├<b>👨‍💻 Programer</b> : <a href=https://t.me/MadflixOfficials>Jishu Developer</a>
-├<b>📕 Library</b> : <a href=https://github.com/pyrogram>Pyrogram</a>
-├<b>✏️ Language</b> : <a href=https://www.python.org>Python 3</a>
-├<b>💾 Database</b> : <a href=https://cloud.mongodb.com>Mongo DB</a>
-├<b>📊 Build Version</b> : <a href=https://instagram.com/jishu.editz>Rename v4.5.0</a></b>     
-╰───────────────⍟
-"""
+    ABOUT_TXT = f"""<b>😈 My Name :</b> <a href='https://t.me/Gjjbsrijjb_bot'>Video editor bot ⚡</a>
+<b>📝 Language :</b> <a href='https://python.org'>Python 3</a>
+<b>📚 Library :</b> <a href='https://pyrogram.org'>Pyrogram 2.0</a>
+<b>🚀 Server :</b> <a href='https://heroku.com'>Heroku</a>
+<b>📢 Channel :</b> <a href='https://t.me/Anime_Warrior_Tamil'>AWT BOTS</a>
+<b>🛡️ :</b> <a href='https://t.me/+NITVxLchQhYzNGZl'>AWT Developer</a>
+    
+<b>😈 Bot Made By :</b> @AWT_Bot_Developer"""
 
     HELP_TXT = """
 🌌 <b><u>How To Set Thumbnail</u></b>
@@ -71,11 +68,6 @@ class Txt(object):
 
 ⏰ Duration ➠ : {duration}</code>
 
-✏️ <b><u>How To Rename A File</u></b>
-
-➪ Send Any File And Type New File Name And Select The Format [ Document, Video, Audio ].           
-
-𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽 𝗖𝗼𝗻𝘁𝗮𝗰𝘁 :- <a href=https://t.me/MadflixOfficials>Developer</a>
 """
 
     PROGRESS_BAR = """\n
@@ -90,7 +82,7 @@ class Txt(object):
 
 If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 10 Rs Upto Your Choice.
 
-<b>🛍 UPI ID:</b> `madflixofficial@axl`
+<b>🛍 UPI ID:</b> `Now off❌`
 """
 
 
@@ -98,9 +90,9 @@ If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 10 Rs Upt
 
 For Example :-
 
-<code>By :- @Madflix_Bots</code>
+<code>By :- @Anime_warrior_tamil</code>
 
-💬 For Any Help Contact @MadflixOfficials
+💬 For Any Help Contact @Anime_warrior_tamil
 """
 
 
