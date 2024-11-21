@@ -8,5 +8,6 @@ aiohttp
 pytz
 psutil
 pyromod
+ffmpeg-python
 asyncio
 humanize
