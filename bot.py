@@ -5,6 +5,7 @@ from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
 from route import web_server
+import pyromod
 import pyrogram.utils
 
 pyrogram.utils.MIN_CHAT_ID = -999999999999
@@ -33,11 +34,12 @@ class Bot(Client):
         if Config.WEBHOOK:
             app = web.AppRunner(await web_server())
             await app.setup()       
-            await web.TCPSite(app, "0.0.0.0", 8080).start()     
+            await web.TCPSite(app, "0.0.0.0", 8020).start()     
         print(f"{me.first_name} Is Started.....✨️")
         for id in Config.ADMIN:
-            try: await self.send_message(Config.LOG_CHANNEL, f"**{me.first_name}  Is Started.....✨️**")                                
+            try: await self.send_message(id, f"**{me.first_name}  Is Started...**")                                
             except: pass
+        
         if Config.LOG_CHANNEL:
             try:
                 curr = datetime.now(timezone("Asia/Kolkata"))
@@ -51,7 +53,10 @@ Bot().run()
 
 
 
+
+
+
 # Jishu Developer 
 # Don't Remove Credit 🥺
-# Telegram Channel @Madflix_Bots
+# Telegram Channel @JishuBotz
 # Developer @JishuDeveloper
