@@ -15,6 +15,7 @@ import re
 
 renaming_operations = {}
 
+custom_name = ""
 
 TARGET_CHANNEL_ID = None
 
@@ -59,7 +60,15 @@ async def set_target_channel(client , message):
     else:
         await message.reply("Please provide a channel ID after the command. Example: /set_target 123456789")
 
+@Client.on_message(filters.command("set_name") & filters.user(Config.ADMIN))
+async def set_name(client, message):
+    global custom_name
 
+    if len(message.command) > 1:
+        custom_name = " ".join(message.command[1:])
+        await message.reply(f"Name added successfully ✅\nThe name was set to: {custom_name}")
+    else:
+        await message.reply("Please provide a name after the command. Example: /set_name MyCustomName")
 
 
 def extract_quality(filename):
@@ -158,11 +167,12 @@ episode_number = extract_episode_number(filename)
 print(f"Extracted Episode Number: {episode_number}")
 
 # Inside the handler for file uploads
-@Client.on_message(filters.private & (filters.document | filters.video | filters.audio))
+@Client.on_message(filters.private & (filters.document | filters.video | filters.audio) & filters.user(Config.ADMIN))
 async def auto_rename_files(client, message):
-    global TARGET_CHANNEL_ID
+    global TARGET_CHANNEL_ID, custom_name
     user_id = message.from_user.id
     firstname = message.from_user.first_name
+    
     format_template = await madflixbotz.get_format_template(user_id)
     media_preference = await madflixbotz.get_media_preference(user_id)
 
@@ -229,10 +239,22 @@ async def auto_rename_files(client, message):
         new_file_name = f"{format_template}{file_extension}"
         file_path = f"downloads/{new_file_name}"
         file = message
+        data = f" {custom_name} -S01 - EP{episode_number} - {extracted_qualities} Tamil "
 
-        download_msg = await client.send_message(chat_id=TARGET_CHANNEL_ID, text="Trying To Download.....")
+        if not TARGET_CHANNEL_ID:
+            await message.reply("**Error:** Target channel not set. Use /set_target to set the channel.")
+            return
         try:
-            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Download Started....", download_msg, time.time()))
+            chat = await client.get_chat(TARGET_CHANNEL_ID)
+            channel_name = chat.title  # Get the channel title
+        except Exception as e:
+            await message.reply(f"Error fetching channel name: {e}")
+            return
+
+        
+        download_msg = await client.send_message(chat_id=TARGET_CHANNEL_ID, text=data + "💠Preparing to Download the Episode 📥")
+        try:
+            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=(data, "🚀 Start Downloading From My Website ⚡, download_msg, time.time()))
         except Exception as e:
             # Mark the file as ignored
             del renaming_operations[file_id]
@@ -255,7 +277,7 @@ async def auto_rename_files(client, message):
         except Exception as e:
             print(f"Error getting duration: {e}")
 
-        upload_msg = await download_msg.edit("Trying To Uploading.....")
+        upload_msg = await download_msg.edit(text="😇Ready To Upload - " + data)
         ph_path = None
         c_caption = await madflixbotz.get_caption(message.chat.id)
         c_thumb = await madflixbotz.get_thumbnail(message.chat.id)
@@ -284,7 +306,7 @@ async def auto_rename_files(client, message):
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time())
+                    progress_args=("💠 Uploading-", data, "-to👉", channel_name, upload_msg, time.time())
                 )
             elif type == "video":
                 await client.send_video(
