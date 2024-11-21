@@ -328,8 +328,7 @@ async def auto_rename_files(client, message):
                     progress=progress_for_pyrogram,
                     progress_args=("💠 Uploading The Episode", upload_msg, time.time())
                 )
-        await download_msg.edit("File Uploaded Successfully ✅")
-        await asyncio.sleep(3)
+        
         except Exception as e:
             os.remove(file_path)
             if ph_path:
