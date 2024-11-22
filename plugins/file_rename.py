@@ -337,9 +337,7 @@ async def auto_rename_files(client, message):
             return await upload_msg.edit(f"Error: {e}")
         
          
-        await upload_msg.edit("File Uploaded Successfully ✅")
-        await asyncio.sleep(3)
-        await upload_msg.delete() 
+        await download_msg.delete() 
         os.remove(file_path)
         if ph_path:
             os.remove(ph_path)
